@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form validations</title>
+    <style>
+        .main{
+            /* border: 1px solid red; */
+            width: 300px;
+            height: 400px;
+            margin: 7% 35%;
+            padding: 50px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            border-radius: 50px;
+        }
+        img{
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          
+        }
+        #image{
+          margin-left: 90px;
+        }
+        #user{
+          text-align: center;
+          font-size: 2rem;
+        }
+        input{
+          margin: 25px;
+          border-radius: 30px;
+          padding: 5px
+        
+        }
+        button{
+          margin-left: 120px;
+          padding: 5px 10px;
+          border-radius: 20px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div id="image">
+        <img src="./userlogo.jpeg"/>
+      </div>
+      <p id="user">User</p>
+      <label>Username:</label>
+      <input type="text" id="inpt1" />
+      <br />
+      <label>Password:</label>
+      <input type="password" id="inpt2" />
+      <div>
+        <button onclick="btnHandler()" type="submit">Submit</button>
+      </div>
+    </div>
+
+    <script>
+      const btnHandler = () => {
+        let existingUsers = localStorage.getItem("userDetails");
+        let users = existingUsers ? JSON.parse(existingUsers) : [];
+        let ip1 = document.getElementById("inpt1").value;
+        let ip2 = document.getElementById("inpt2").value;
+        let userDetails = { name: ip1, password: ip2 };
+
+            // localStorage.clear()
+        if (users.length < 1) {
+          users.push(userDetails);
+          localStorage.setItem("userDetails", JSON.stringify(users));
+        } else {
+          var storageData = JSON.parse(localStorage.userDetails);
+          count1 = 0;
+          count2 = 0;
+
+          for (i = 0; i < storageData.length; i++) {
+            if (storageData[i].name == userDetails.name) {
+              var error1 = document.getElementById("user");
+              console.log(error1);
+              error1.innerText = "user already existed";
+              error1.style.color="red"
+              count1++;
+              break;
+            }
+          }
+          if (count1 == 0) {
+            users.push(userDetails);
+            localStorage.setItem("userDetails", JSON.stringify(users));
+            var error1 = document.getElementById("user");
+            error1.innerText = "User";
+            error1.style.color="black"
+            
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
